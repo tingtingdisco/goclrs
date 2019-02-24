@@ -1,22 +1,22 @@
 package sort
 
 import (
-	"fmt"
 	"math"
 )
 
-func Merge(arr []int, p, q, r int) {
-	L := arr[p:q]
-	R := arr[q : r+1]
+func merge(arr []int, p, q, r int) {
+	L := make([]int, len(arr[p:q]))
+	copy(L, arr[p:q])
+
+	R := make([]int, len(arr[q:r+1]))
+	copy(R, arr[q:r+1])
 
 	L = append(L, 1000000)
 	R = append(R, 1000000)
 
-	fmt.Println(L, R)
-
 	i, j := 0, 0
 
-	for k := p; k < r; k++ {
+	for k := p; k <= r; k++ {
 		if L[i] <= R[j] {
 			arr[k] = L[i]
 			i++
@@ -25,14 +25,14 @@ func Merge(arr []int, p, q, r int) {
 			j++
 		}
 	}
-
 }
 
+// MergeSort sort arr from index p to r
 func MergeSort(arr []int, p, r int) {
 	if p < r {
-		q := int(math.Floor((float64(p+r) / 2)))
-		MergeSort(arr, p, q)
-		MergeSort(arr, q+1, r)
-		Merge(arr, p, q, r)
+		q := int(math.Ceil((float64(p+r) / 2)))
+		MergeSort(arr, p, q-1)
+		MergeSort(arr, q, r)
+		merge(arr, p, q, r)
 	}
 }
