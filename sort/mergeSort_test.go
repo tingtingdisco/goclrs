@@ -14,3 +14,12 @@ func Test_mergeSort(t *testing.T) {
 		t.Error(`sort error`)
 	}
 }
+
+func Test_mergeSortArr(t *testing.T) {
+	arr := MergeSortArr([]int{2, 4, 5, 1, 3})
+	sortedArr := []int{1, 2, 3, 4, 5}
+
+	if !reflect.DeepEqual(arr, sortedArr) {
+		t.Error(`sort error`)
+	}
+}
