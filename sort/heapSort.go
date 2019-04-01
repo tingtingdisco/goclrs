@@ -1,5 +1,10 @@
 package sort
 
+import (
+	"errors"
+	"math"
+)
+
 // Heap data structure
 type Heap struct {
 	slice    []int
@@ -9,6 +14,47 @@ type Heap struct {
 // Len returns length of Heap instance
 func (h *Heap) Len() int {
 	return len(h.slice)
+}
+
+// Maximum returns the element of heap with the largest key
+func (h *Heap) Maximum() int {
+	return h.slice[0]
+}
+
+// ExtractMax extract the element of heap with the largest key
+func (h *Heap) ExtractMax() (int, error) {
+	if h.heapSize < 1 {
+		return 0, errors.New("heap underflow")
+	}
+	max := h.slice[0]
+	h.slice[0] = h.slice[h.heapSize-1]
+	h.heapSize--
+	MaxHeapify(h, 0)
+	return max, nil
+}
+
+// IncreaseKey increase element i's key value
+func (h *Heap) IncreaseKey(i, key int) error {
+	if key < h.slice[i] {
+		return errors.New("new key is smaller than current key")
+	}
+
+	h.slice[i] = key
+	parent := (i - 1) / 2
+
+	for i > 0 && h.slice[parent] < h.slice[i] {
+		h.slice[parent], h.slice[i] = h.slice[i], h.slice[parent]
+		i = parent
+	}
+
+	return nil
+}
+
+// Insert an element to a heap
+func (h *Heap) Insert(key int) {
+	h.heapSize++
+	h.slice[h.heapSize-1] = math.MinInt64
+	h.IncreaseKey(h.heapSize-1, key)
 }
 
 // MaxHeapify float down element i if it's smaller than its children nodes
