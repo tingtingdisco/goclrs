@@ -1,6 +1,6 @@
 package sort
 
-func insertionSort(arr []int) {
+func InsertionSort(arr []int) {
 	for i := 1; i < len(arr); i++ {
 		for j := i; j > 0; j-- {
 			if arr[j] < arr[j-1] {

@@ -8,7 +8,7 @@ import (
 
 func Test_insertionSort(t *testing.T) {
 	arr := []int{2, 4, 5, 1, 3}
-	insertionSort(arr)
+	InsertionSort(arr)
 	sortedArr := []int{1, 2, 3, 4, 5}
 
 	fmt.Println(arr, sortedArr)
